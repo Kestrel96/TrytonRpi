@@ -3,11 +3,12 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include<softPwm.h>
-
+#include<wiringSerial.h>
 //Potrzebne na pc, na Rpi komentowac:
 //#include<wiringPi/softPwm.h>
 //#include<wiringPi/wiringPi.h>
 //#include<wiringPi/wiringPiI2C.h>
+//#include<wiringPi/wiringSerial.h>
 
 //Moje klasy
 #include"rpimpu6050.h"
@@ -32,6 +33,16 @@ int main()
 {
     if(wiringPiSetup() == -1)
     exit(1);
+    
+    pinMode(4,INPUT);
+
+    int Serial;
+
+    if((Serial=serialOpen("/dev/ttyAMA0",9600))==-1){
+    cout<<"Serial error"<<endl;
+    cin>>Serial;
+    exit(1);
+    }
 
     RpiMPU6050 MPU(MPU_6050_ADDRESS);
     RpiMPU6050 MPU2(MPU_6050_ADDRESS_2);
@@ -45,7 +56,7 @@ int main()
     unsigned short int port=4567;
     unsigned short int receivePort=1234;
 
-    if(ReceiveSocket.bind(receivePort,IP)!=ReceiveSocket.Done){
+    if(ReceiveSocket.bind(receivePort)!=ReceiveSocket.Done){
          cout<<"socket binding error!";
                int x;
          cin>>x;
@@ -72,11 +83,22 @@ int main()
         MPU2.PrintAll();
 
         Data<<MPU.yaw<<MPU.roll<<MPU2.roll;
+
         SendSocket.send(Data,IP,port);
         Data.clear();
         ReceiveSocket.receive(Data,IP,receivePort);
+        int x,y,z,r;
+
+       Data>>x>>y>>z>>r;
+
+       cout<<"x: "<<x<<endl;
+       cout<<"y: "<<y<<endl;
+       cout<<"z: "<<z<<endl;
+       cout<<"r: "<<r<<endl;
+
+
         Arduino.PrepareToSend(MPU,MPU2);
-        Arduino.Write();
+              
         Data.clear();
 
         //delay(10);
