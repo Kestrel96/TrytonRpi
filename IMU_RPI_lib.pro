@@ -7,7 +7,8 @@ INCLUDEPATH += /home/kuba/Qt/Rozne/wiringPi
 
 SOURCES += main.cpp \
     rpimpu6050.cpp \
-    arduino_i2c.cpp
+    ardu_com.cpp \
+    rotations.cpp \
 
 unix:!macx: LIBS += -L$$PWD/../../SFMLqt/lib/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
@@ -16,7 +17,8 @@ DEPENDPATH += $$PWD/../../SFMLqt/include
 
 HEADERS += \
     rpimpu6050.h \
-    arduino_i2c.h
+    rotations.h               \
+    ardu_com.h
 unix:!macx: LIBS += -L$$PWD/../../SFMLqt/lib/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
 INCLUDEPATH += $$PWD/../../SFMLqt/include

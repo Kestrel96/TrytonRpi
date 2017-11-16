@@ -42,6 +42,7 @@ using namespace std;
 #define GYRO_ZL     0x48
 
 #define ACCEL_CONSTANT 16834
+#define GYRO_CONSTANT 131
 
 
 
@@ -76,21 +77,42 @@ void RpiMPU6050::Pitch(){
 
 }
 
+void RpiMPU6050::Yaw(double tau){
+    this->yaw=this->yaw+this->gz*tau/1000;//ms
+
+}
+
+void RpiMPU6050::Reset_Yaw(){
+    this->yaw=0;
+}
+
 void RpiMPU6050::XAcc(){
-    this->ax=ReadAccelerometer(ACCEL_XH,ACCEL_XL);
+    this->ax=ReadRegister(ACCEL_XH,ACCEL_XL)/ACCEL_CONSTANT;
 }
 
 void RpiMPU6050::YAcc(){
-    this->ay=ReadAccelerometer(ACCEL_YH,ACCEL_YL);
+    this->ay=ReadRegister(ACCEL_YH,ACCEL_YL)/ACCEL_CONSTANT;
 }
 
 void RpiMPU6050::ZAcc(){
-    this->az=ReadAccelerometer(ACCEL_ZH,ACCEL_ZL);
+    this->az=ReadRegister(ACCEL_ZH,ACCEL_ZL)/ACCEL_CONSTANT;
+}
+
+void RpiMPU6050::XGyro(){
+    this->gx=ReadRegister(GYRO_XH ,GYRO_XL)/GYRO_CONSTANT;
+}
+
+void RpiMPU6050::YGyro(){
+    this->gy=ReadRegister(GYRO_YH ,GYRO_YL)/GYRO_CONSTANT;
+}
+
+void RpiMPU6050::ZGyro(){
+    this->gz=ReadRegister(GYRO_ZH ,GYRO_ZL)/GYRO_CONSTANT;
 }
 
 
 
-double RpiMPU6050::ReadAccelerometer(int reg_H, int reg_L){
+double RpiMPU6050::ReadRegister(int reg_H, int reg_L){
 
     double a=0;
     uint8_t tmp=0;
@@ -99,7 +121,7 @@ double RpiMPU6050::ReadAccelerometer(int reg_H, int reg_L){
     tmp=wiringPiI2CReadReg8(this->fd,reg_L);
     a16=a16<<8;
     a16=a16 | tmp;
-    a=(double) a16/ACCEL_CONSTANT;
+    a=(double) a16;
 
 
    return a;
@@ -115,6 +137,7 @@ void RpiMPU6050::PrintAll(){
     cout<<"az :"<<this->az<<"g"<<endl;
     cout<<"roll: "<<this->roll<<"deg"<<endl;
     cout<<"pitch: "<<this->pitch<<"deg"<<endl;
+    cout<<"yaw: "<<this->yaw<<"deg"<<endl;
 
 }
 

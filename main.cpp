@@ -1,18 +1,19 @@
-
 //odkomentowac przy kompilacji na Rpi:
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include<softPwm.h>
+
 
 //Potrzebne na pc, na Rpi komentowac:
 //#include<wiringPi/softPwm.h>
 //#include<wiringPi/wiringPi.h>
 //#include<wiringPi/wiringPiI2C.h>
 
-//Moje klasy
-#include"rpimpu6050.h"
-#include "arduino_i2c.h"
+#include<wiringSerial.h>
 
+//Moje klasy
+#include "rpimpu6050.h"
+#include "rotations.h"
 
 #include<SFML/Network.hpp>
 #include <iostream>
@@ -21,71 +22,84 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#define    MPU_6050_ADDRESS   0x68
+#define    MPU_6050_ADDRESS 0x68
 #define    MPU_6050_ADDRESS_2 0x69
-#define    ARDUINO_ADDRESS    0xA
-
 using namespace std;
 using namespace sf;
+
+
+//QUATERNION OUTPUT
+//YAW!!!!!!!!!!!!!!
+
+
 
 int main()
 {
     if(wiringPiSetup() == -1)
-    exit(1);
+        exit(1);
 
     RpiMPU6050 MPU(MPU_6050_ADDRESS);
-    RpiMPU6050 MPU2(MPU_6050_ADDRESS_2);
-    Arduino_i2c Arduino(ARDUINO_ADDRESS);
-
+    unsigned short int port=4567;
+    unsigned short int receive_port=1234;
+    unsigned short int PID_port=5678;
     UdpSocket SendSocket;
     UdpSocket ReceiveSocket;
+    UdpSocket PID_Socket;
     SendSocket.setBlocking(false);
     ReceiveSocket.setBlocking(false);
-    IpAddress IP="10.42.0.1";
-    unsigned short int port=4567;
-    unsigned short int receivePort=1234;
+    PID_Socket.setBlocking(false);
+    PID_Socket.bind(PID_port);
+    ReceiveSocket.bind(receive_port);
 
-    if(ReceiveSocket.bind(receivePort,IP)!=ReceiveSocket.Done){
-         cout<<"socket binding error!";
-               int x;
-         cin>>x;
-         exit(1);
-    }
-
+    float tp=0.3;
+    Rotations ROT(tp);
+    float *MOT;
+{       
+//    //serial:
+//    if ((fd = serialOpen ("/dev/ttyAMA0", 9600)) < 0)
+//      {
+//        fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
+//        return 1 ;
+//    }
+}
+    sf::IpAddress IP="10.42.0.1";
     sf::Packet Data;
 
+    int pitch_setpoint=0;
+    int roll_setpoint=0;
+    int throttle_setpoint=0;
+
     while(1){
+
         MPU.XAcc();
         MPU.YAcc();
         MPU.ZAcc();
+        MPU.ZGyro();
         MPU.Roll();
         MPU.Pitch();
-
-        MPU2.XAcc();
-        MPU2.YAcc();
-        MPU2.ZAcc();
-        MPU2.Roll();
-        MPU2.Pitch();
-
+        MPU.Yaw(10);
         MPU.PrintAll();
-        cout<<"MPU2: "<<endl;
-        MPU2.PrintAll();
 
-        Data<<MPU.yaw<<MPU.roll<<MPU2.roll;
-        SendSocket.send(Data,IP,port);
-        Data.clear();
-        ReceiveSocket.receive(Data,IP,receivePort);
-        Arduino.PrepareToSend(MPU,MPU2);
-        Arduino.Write();
+        MOT=ROT.calculate(MPU.yaw,MPU.pitch,MPU.roll);
+
+
+        Data<<MPU.yaw<<MPU.roll<<MPU.roll;
+        SendSocket.send(Data,"10.42.0.1",port);
         Data.clear();
 
-        //delay(10);
+        ReceiveSocket.receive(Data,IP,receive_port);
+        Data>>pitch_setpoint>>roll_setpoint>>throttle_setpoint;
+
+
+
+//        serialPuts(fd,ArduString);
+
+        delay(10);
+        Data.clear();
         system("clear");
     }
 
 
     return 0;
 }
-
-
 
