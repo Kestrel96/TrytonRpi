@@ -68,6 +68,8 @@ int main()
     int pitch_setpoint=0;
     int roll_setpoint=0;
     int throttle_setpoint=0;
+    int yaw_setpoint=0;
+
 
     while(1){
 
@@ -89,6 +91,10 @@ int main()
 
         ReceiveSocket.receive(Data,IP,receive_port);
         Data>>pitch_setpoint>>roll_setpoint>>throttle_setpoint;
+        ROT.setNewVal(yaw_setpoint,pitch_setpoint,roll_setpoint);
+        Data.clear();
+        PID_Socket.receive(Data,IP,PID_port);
+        Data>>ROT.Td_x>>ROT.Kp_x>>ROT.Ti_x>>ROT.Td_x>>ROT.Kp_x>>ROT.Ti_x>>ROT.Td_x>>ROT.Kp_x>>ROT.Ti_x;
 
 
 
