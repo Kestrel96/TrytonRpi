@@ -33,12 +33,16 @@ public:
 
     double setpoint;
     double pv;
+
     double error;
     long double I_error;
     double last_error;
+
     double output;
     double max_output;
+
     double CVP;
+    double offset;
 
     double P;
     double I;

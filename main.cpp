@@ -14,6 +14,7 @@
 //Moje klasy
 #include "rpimpu6050.h"
 #include "rotations.h"
+#include "pid.h"
 
 #include<SFML/Network.hpp>
 #include <iostream>
@@ -51,9 +52,8 @@ int main()
     PID_Socket.bind(PID_port);
     ReceiveSocket.bind(receive_port);
 
-    float tp=0.3;
-    Rotations ROT(tp);
-    float *MOT;
+
+
 {       
 //    //serial:
 //    if ((fd = serialOpen ("/dev/ttyAMA0", 9600)) < 0)
@@ -69,6 +69,8 @@ int main()
     int roll_setpoint=0;
     int throttle_setpoint=0;
 
+    PID PID1,PID2;
+
     while(1){
 
         MPU.XAcc();
@@ -80,7 +82,11 @@ int main()
         MPU.Yaw(10);
         MPU.PrintAll();
 
-        MOT=ROT.calculate(MPU.yaw,MPU.pitch,MPU.roll);
+        PID1.pv=MPU.roll;
+        PID2.pv=MPU.pitch;
+
+        PID1.Compute();
+        PID2.Compute();
 
 
         Data<<MPU.yaw<<MPU.roll<<MPU.roll;
@@ -89,7 +95,15 @@ int main()
 
         ReceiveSocket.receive(Data,IP,receive_port);
         Data>>pitch_setpoint>>roll_setpoint>>throttle_setpoint;
+        PID1.setpoint=roll_setpoint;
+        PID2.setpoint=pitch_setpoint;
+        PID1.PrintAll();
+        PID2.PrintAll();
 
+        Data.clear();
+
+        PID_Socket.receive(Data,IP,PID_port);
+        Data>>PID1.Ki>>PID1.Kp>>PID1.Kd>>PID1.tau>>PID1.offset>>PID2.Ki>>PID2.Kp>>PID2.Kd>>PID2.tau>>PID2.offset;
 
 
 //        serialPuts(fd,ArduString);

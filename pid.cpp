@@ -14,6 +14,7 @@ PID::PID()
 //    this->throttle_limit=0.75;
 //    this->throttle_lock=0;
     //this->T=0;
+
     this->tau=1;
     this->Reset();
     this->clock.restart();
@@ -47,6 +48,8 @@ void PID::Compute(){
 
     if(this->COMPUTE==1){
 
+        setpoint=setpoint-offset;
+
         //error
         this->error=this->setpoint-this->pv;
 
@@ -62,13 +65,14 @@ void PID::Compute(){
 
         this->last_error=error;
 
-        this->output=this->CVP=this->P+this->I+this->D;
+        this->output=this->CVP+this->P+this->I+this->D;
 
         if(this->output>this->max_output){
             this->output=this->max_output;
         }
 
-        if(this->output<-this->max_output){
+        //wersja jak dla drona, dla trytona musi byc -max
+        if(this->output< -this->max_output){
             this->output=0;
         }
 
