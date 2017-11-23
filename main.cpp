@@ -95,6 +95,8 @@ int main()
 
         ReceiveSocket.receive(Data,IP,receive_port);
         Data>>pitch_setpoint>>roll_setpoint>>throttle_setpoint;
+        PID1.CVP=throttle_setpoint;
+        PID1.CVP=PID2.CVP;
         PID1.setpoint=roll_setpoint;
         PID2.setpoint=pitch_setpoint;
         PID1.PrintAll();
