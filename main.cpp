@@ -49,7 +49,7 @@ int main()
     unsigned short int port=4567;
     unsigned short int receivePort=1234;
 
-    if(ReceiveSocket.bind(receivePort,IP)!=ReceiveSocket.Done){
+    if(ReceiveSocket.bind(receivePort)!=ReceiveSocket.Done){
          cout<<"socket binding error!";
                int x;
          cin>>x;
@@ -62,7 +62,7 @@ int main()
     t=sf::milliseconds(0);
 
     double SP=0;
-    double dt=100; //ms
+    double dt=10; //ms
 
 
 
@@ -97,7 +97,7 @@ int main()
         ReceiveSocket.receive(Data,IP,receivePort);
 
 
-        //delay(10);
+       
         system("clear");
     }
 
