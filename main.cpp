@@ -9,12 +9,17 @@
 //#include<wiringPi/wiringPi.h>
 //#include<wiringPi/wiringPiI2C.h>
 
+//#include<SFML/System/Clock.hpp>
+//#include<SFML/System/Time.hpp>
+
+
 //Moje klasy
 #include"rpimpu6050.h"
-#include "arduino_i2c.h"
-
+#include"pid.h"
 
 #include<SFML/Network.hpp>
+#include<SFML/Time.hpp>
+#include<SFML/Clock.hpp>
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
@@ -34,8 +39,8 @@ int main()
     exit(1);
 
     RpiMPU6050 MPU(MPU_6050_ADDRESS);
-    RpiMPU6050 MPU2(MPU_6050_ADDRESS_2);
-    Arduino_i2c Arduino(ARDUINO_ADDRESS);
+    PID Pitch_PID;
+    PID Roll_PID;
 
     UdpSocket SendSocket;
     UdpSocket ReceiveSocket;
@@ -53,31 +58,44 @@ int main()
     }
 
     sf::Packet Data;
+    Clock clock;
+    Time t=0;
 
+    double SP=0;
+    double dt=100; //ms
+
+
+
+    clock.restart();
     while(1){
+
+        t=clock.restart();
         MPU.XAcc();
         MPU.YAcc();
         MPU.ZAcc();
         MPU.Roll();
         MPU.Pitch();
 
-        MPU2.XAcc();
-        MPU2.YAcc();
-        MPU2.ZAcc();
-        MPU2.Roll();
-        MPU2.Pitch();
-
         MPU.PrintAll();
-        cout<<"MPU2: "<<endl;
-        MPU2.PrintAll();
+        if(t.asMilliseconds()>=dt){
+            Roll_PID.Compute(MPU.roll,1);
+            Pitch_PID.Compute(MPU.pitch,1);
+        }
 
-        Data<<MPU.yaw<<MPU.roll<<MPU2.roll;
+        cout<<"Roll PID:"<<endl;
+        Roll_PID.Print();
+        cout<<"Pitch PID:"<<endl;
+        Pitch_PID.Print();
+        t.asMilliseconds();
+        cout<<"t:"<<t<<"ms"<<endl;
+
+        Data<<MPU.yaw<<MPU.pitch<<MPU.roll;
+
+        Data.clear();
         SendSocket.send(Data,IP,port);
         Data.clear();
         ReceiveSocket.receive(Data,IP,receivePort);
-        Arduino.PrepareToSend(MPU,MPU2);
-        Arduino.Write();
-        Data.clear();
+
 
         //delay(10);
         system("clear");
@@ -86,6 +104,9 @@ int main()
 
     return 0;
 }
+
+
+
 
 
 
