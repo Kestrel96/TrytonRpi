@@ -19,8 +19,9 @@ PID::PID()
 }
 
 
-void PID::Compute (double pv, bool PD_on_big_e){
+void PID::Compute (double sp, double pv, bool PD_on_big_e){
 
+    SP=sp;
     e=SP-pv;
     P=kp*e;
     I=(kp/Ti)*e_sum;
