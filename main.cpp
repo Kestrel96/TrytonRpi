@@ -18,8 +18,7 @@
 #include"pid.h"
 
 #include<SFML/Network.hpp>
-#include<SFML/Time.hpp>
-#include<SFML/Clock.hpp>
+#include<SFML/System.hpp>
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
@@ -59,7 +58,8 @@ int main()
 
     sf::Packet Data;
     Clock clock;
-    Time t=0;
+    Time t;
+    t=sf::milliseconds(0);
 
     double SP=0;
     double dt=100; //ms
@@ -87,7 +87,7 @@ int main()
         cout<<"Pitch PID:"<<endl;
         Pitch_PID.Print();
         t.asMilliseconds();
-        cout<<"t:"<<t<<"ms"<<endl;
+        cout<<"t:"<<t.asMilliseconds()<<"ms"<<endl;
 
         Data<<MPU.yaw<<MPU.pitch<<MPU.roll;
 
