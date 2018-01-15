@@ -19,7 +19,7 @@ PID::PID()
 }
 
 
-void PID::Compute (double sp, double pv, double PD_on_big_e){
+void PID::Compute (double sp, double pv,double WP, double PD_on_big_e){
 
     SP=sp;
     e=SP-pv;
@@ -32,7 +32,7 @@ void PID::Compute (double sp, double pv, double PD_on_big_e){
         e_sum=0;
     }
 
-    CV=P+I+D;
+    CV=P+I+D+WP;
 
     if (CV>=MAX_CV){
         CV=MAX_CV;
@@ -41,6 +41,7 @@ void PID::Compute (double sp, double pv, double PD_on_big_e){
     if (CV<=MIN_CV){
         CV=MIN_CV;
     }
+
 
 }
 
