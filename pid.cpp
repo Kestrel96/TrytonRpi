@@ -63,10 +63,13 @@ void PID::Reset(){
 
 void PID::Print(){
 
+    cout<<"Kp:"<<kp<<" "<<"Ti:"<<Ti<<" "<<"Td:"<<Td<<endl;
+    cout<<"P:"<<P<<"I:"<<I<<"D"<<D<<endl;
     cout<<"SP:"<<SP<<endl;
     cout<<"e:"<<e<<endl;
     cout<<"CV:"<<CV<<endl;
     cout<<"err_sum:"<<e_sum<<endl;
+
 
 
 }
