@@ -64,6 +64,7 @@ int main()
     double SP=0;
     double dt=10; //ms
 
+	Roll_PID.Tuning(10,10,10,10);
 
 
     clock.restart();
@@ -78,8 +79,8 @@ int main()
 
         MPU.PrintAll();
         if(t.asMilliseconds()>=dt){
-            Roll_PID.Compute(MPU.roll,1);
-            Pitch_PID.Compute(MPU.pitch,1);
+            Roll_PID.Compute(SP,MPU.roll,1);
+            Pitch_PID.Compute(SP,MPU.pitch,1);
         }
 
         cout<<"Roll PID:"<<endl;
