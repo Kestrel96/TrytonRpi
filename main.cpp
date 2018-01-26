@@ -48,6 +48,7 @@ int main()
     IpAddress IP="10.42.0.1";
     unsigned short int port=4567;
     unsigned short int receivePort=1234;
+    unsigned short int PIDreceivePort=5678;
 
     if(ReceiveSocket.bind(receivePort)!=ReceiveSocket.Done){
          cout<<"socket binding error!";
@@ -57,14 +58,21 @@ int main()
     }
 
     sf::Packet Data;
+    sf::Packet PIDPacket;
     Clock clock;
     Time t;
     t=sf::milliseconds(0);
 
+    double kpt=0;
+    double Tit=0;
+    double Tdt=0;
+    double dtt=0;
+    double offset_t=0;
+
     double SP=0;
     double dt=10; //ms
 
-	Roll_PID.Tuning(10,10,10,10);
+    Roll_PID.Tuning(10,10,10,10);
 
 
     clock.restart();
@@ -89,16 +97,23 @@ int main()
         Pitch_PID.Print();
         t.asMilliseconds();
         cout<<"t:"<<t.asMilliseconds()<<"ms"<<endl;
+        Data.clear();
 
         Data<<MPU.yaw<<MPU.pitch<<MPU.roll;
 
-        Data.clear();
         SendSocket.send(Data,IP,port);
         Data.clear();
+
         ReceiveSocket.receive(Data,IP,receivePort);
+        ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
+        PIDPacket>>kpt>>Tit>>Tdt>>dtt>>offset_t;
+        Roll_PID.Tuning(kpt,Tit,Tdt,dtt);
+        PIDPacket>>kpt>>Tit>>Tdt>>dtt>>offset_t;
+        Pitch_PID.Tuning(kpt,Tit,Tdt,dtt);
+        PIDPacket.clear();
 
 
-       
+
         system("clear");
     }
 
