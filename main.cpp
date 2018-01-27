@@ -64,7 +64,7 @@ int main()
     t=sf::milliseconds(0);
 
     double kpt=0;
-    double Tit=0;
+    double Kit=0;
     double Tdt=0;
     double dtt=0;
     double offset_t=0;
@@ -106,10 +106,10 @@ int main()
 
         ReceiveSocket.receive(Data,IP,receivePort);
         ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
-        PIDPacket>>kpt>>Tit>>Tdt>>dtt>>offset_t;
-        Roll_PID.Tuning(kpt,Tit,Tdt,dtt);
-        PIDPacket>>kpt>>Tit>>Tdt>>dtt>>offset_t;
-        Pitch_PID.Tuning(kpt,Tit,Tdt,dtt);
+        PIDPacket>>kpt>>Kit>>Kdt>>dtt>>offset_t;
+        Roll_PID.Tuning(kpt,Kit,Kdt,dtt);
+        PIDPacket>>kpt>>Kit>>Kdt>>dtt>>offset_t;
+        Pitch_PID.Tuning(kpt,Kit,Kdt,dtt);
         PIDPacket.clear();
 
 

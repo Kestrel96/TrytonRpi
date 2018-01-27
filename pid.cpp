@@ -9,8 +9,8 @@
 using namespace std;
 PID::PID()
 {
-    Ti=1000;
-    Td=1;
+    Ki=1000;
+    Kd=1;
     kp=1;
     e=0;
     last_e=0;
