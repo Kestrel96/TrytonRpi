@@ -3,7 +3,7 @@
 
 #include<iostream>
 #define MAX_CV 100
-#define MIN_CV -100 //np dla drona min 0, dla trytona min -100 (windup)
+#define MIN_CV 0 //np dla drona min 0, dla trytona min -100 (windup)
 
 
 using namespace std;
@@ -24,8 +24,8 @@ void PID::Compute (double sp, double pv,double WP, double PD_on_big_e){
     SP=sp;
     e=SP-pv;
     P=kp*e;
-    I=(kp/Ti)*e_sum;
-    D=kp*Td*(e-last_e)/dt;
+    I=Ki*e_sum;
+    D=Kd*(e-last_e)/dt;
 
     if(e>=PD_on_big_e || e<=-PD_on_big_e){
         I=0;
@@ -45,11 +45,11 @@ void PID::Compute (double sp, double pv,double WP, double PD_on_big_e){
 
 }
 
-void PID::Tuning(double kp, double Ti, double Td, double dt){
+void PID::Tuning(double kp, double Ki, double Kd, double dt){
 
     this->kp=kp;
-    this->Ti=Ti;
-    this->Td=Td;
+    this->Ki=Ki;
+    this->Kd=Kd;
     this->dt=dt/1000;
 
 }
@@ -57,14 +57,14 @@ void PID::Tuning(double kp, double Ti, double Td, double dt){
 void PID::Reset(){
 
    this->kp=0;
-   this->Ti=1000;
-   this->Td=0;
+   this->Ki=1000;
+   this->Kd=0;
 
 }
 
 void PID::Print(){
 
-    cout<<"Kp:"<<kp<<" "<<"Ti:"<<Ti<<" "<<"Td:"<<Td<<endl;
+    cout<<"Kp:"<<kp<<" "<<"Ki:"<<Ki<<" "<<"Kd:"<<Kd<<endl;
     cout<<"P:"<<P<<"I:"<<I<<"D"<<D<<endl;
     cout<<"SP:"<<SP<<endl;
     cout<<"e:"<<e<<endl;

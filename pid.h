@@ -8,7 +8,7 @@ public:
 
     PID();
     void Compute(double sp, double pv, double WP, double PD_on_big_e);
-    void Tuning(double kp, double Ti, double Td, double dt);
+    void Tuning(double kp, double Ki, double Kd, double dt);
     void Reset();
     void Print();
 
@@ -18,8 +18,8 @@ public:
 private:
 
     double kp;
-    double Ti;
-    double Td;
+    double Ki;
+    double Kd;
     double dt;
 
     double SP;
