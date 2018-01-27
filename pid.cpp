@@ -42,6 +42,8 @@ void PID::Compute (double sp, double pv,double WP, double PD_on_big_e){
         CV=MIN_CV;
     }
 
+    last_e=e;
+
 
 }
 
