@@ -43,6 +43,7 @@ void PID::Compute (double sp, double pv,double WP, double PD_on_big_e){
     }
 
     last_e=e;
+    e_sum+=e;
 
 
 }
