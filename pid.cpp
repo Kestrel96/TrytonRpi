@@ -27,6 +27,9 @@ void PID::Compute (double sp, double pv,double WP, double PD_on_big_e){
     I=Ki*e_sum*dt;
     D=Kd*(e-last_e)/dt;
 
+    last_e=e;
+    e_sum+=e;
+
     if(e>=PD_on_big_e || e<=-PD_on_big_e){
         I=0;
         e_sum=0;
@@ -42,8 +45,7 @@ void PID::Compute (double sp, double pv,double WP, double PD_on_big_e){
         CV=MIN_CV;
     }
 
-    last_e=e;
-    e_sum+=e;
+
 
 
 }
@@ -67,7 +69,7 @@ void PID::Reset(){
 
 void PID::Print(){
 
-    cout<<"Kp:"<<kp<<" "<<"Ki:"<<Ki<<" "<<"Kd:"<<Kd<<endl;
+    cout<<"Kp:"<<kp<<" "<<"Ki:"<<Ki<<" "<<"Kd:"<<Kd<<"dt:"<<dt<<endl;
     cout<<"P:"<<P<<"I:"<<I<<"D"<<D<<endl;
     cout<<"SP:"<<SP<<endl;
     cout<<"e:"<<e<<endl;

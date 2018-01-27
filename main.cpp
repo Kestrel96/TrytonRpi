@@ -1,8 +1,8 @@
 
 //odkomentowac przy kompilacji na Rpi:
 #include <wiringPi.h>
-#include <wiringPiI2C.h>
-#include<softPwm.h>
+#include<wiringSerial.h>
+
 
 //Potrzebne na pc, na Rpi komentowac:
 //#include<wiringPi/softPwm.h>
@@ -16,6 +16,7 @@
 //Moje klasy
 #include"rpimpu6050.h"
 #include"pid.h"
+#include"arducomm.h"
 
 #include<SFML/Network.hpp>
 #include<SFML/System.hpp>
@@ -37,9 +38,13 @@ int main()
     if(wiringPiSetup() == -1)
     exit(1);
 
+    serialOpen("/dev/ttyAMA0", 115200);
     RpiMPU6050 MPU(MPU_6050_ADDRESS);
     PID Pitch_PID;
     PID Roll_PID;
+    ArduComm ARD;
+
+
 
     UdpSocket SendSocket;
     UdpSocket ReceiveSocket;
@@ -97,6 +102,7 @@ int main()
         Pitch_PID.Print();
         t.asMilliseconds();
         cout<<"t:"<<t.asMilliseconds()<<"ms"<<endl;
+        cout<<"String:"<<ARD.ArduString<<endl;
         Data.clear();
 
         Data<<MPU.yaw<<MPU.pitch<<MPU.roll;
@@ -111,6 +117,10 @@ int main()
         PIDPacket>>kpt>>Kit>>Kdt>>dtt>>offset_t;
         Pitch_PID.Tuning(kpt,Kit,Kdt,dtt);
         PIDPacket.clear();
+
+        ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV);
+        serialPuts("/dev/ttyAMA0",ARD.ArduString);
+
 
 
 
