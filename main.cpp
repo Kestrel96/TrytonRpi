@@ -38,7 +38,8 @@ int main()
     if(wiringPiSetup() == -1)
     exit(1);
 
-    serialOpen("/dev/ttyAMA0", 115200);
+    int SerialID=0;
+   SerialID=serialOpen("/dev/ttyAMA0", 115200);
     RpiMPU6050 MPU(MPU_6050_ADDRESS);
     PID Pitch_PID;
     PID Roll_PID;
@@ -119,7 +120,8 @@ int main()
         PIDPacket.clear();
 
         ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV);
-        serialPuts("/dev/ttyAMA0",ARD.ArduString);
+
+        serialPuts(SerialID,ARD.ArduString.c_str());
 
 
 

@@ -23,5 +23,4 @@ void ArduComm::PrepareString(double CV1, double CV2){
     tmp=(int) CV2*MAX_PW;
     ArduString+=to_string(tmp);
 
-
 }

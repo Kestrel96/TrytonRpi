@@ -11,14 +11,7 @@ class ArduComm
 public:
     ArduComm();
     void PrepareString(double CV1, double CV2);
-
-private:
-
     string ArduString;
-
-
-
-
 
 };
 
