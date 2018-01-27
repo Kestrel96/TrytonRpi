@@ -65,7 +65,7 @@ int main()
 
     double kpt=0;
     double Kit=0;
-    double Tdt=0;
+    double Kdt=0;
     double dtt=0;
     double offset_t=0;
 
