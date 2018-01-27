@@ -87,8 +87,8 @@ int main()
 
         MPU.PrintAll();
         if(t.asMilliseconds()>=dt){
-            Roll_PID.Compute(SP,MPU.roll,40,10);
-            Pitch_PID.Compute(SP,MPU.pitch,40,10);
+            Roll_PID.Compute(SP,MPU.roll,40,100);
+            Pitch_PID.Compute(SP,MPU.pitch,40,100);
         }
 
         cout<<"Roll PID:"<<endl;
