@@ -124,9 +124,6 @@ int main()
 
         serialPuts(SerialID,ARD.ArduString.c_str());
 
-
-
-
         system("clear");
     }
 

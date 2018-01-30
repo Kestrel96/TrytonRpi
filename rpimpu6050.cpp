@@ -69,6 +69,12 @@ RpiMPU6050::RpiMPU6050(int idDev)
 void RpiMPU6050::Roll(){
 
     this->roll=-atan2(this->ay,this->az)*180/M_PI+180;
+//    if(roll>0 && roll<180){
+
+//    }
+    if(roll<360 && roll>=180){
+        roll=roll-360;
+    }
 }
 
 void RpiMPU6050::Pitch(){
