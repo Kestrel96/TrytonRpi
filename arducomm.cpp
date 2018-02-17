@@ -20,7 +20,7 @@ void ArduComm::PrepareString(double CV1, double CV2){
     ArduString="A";
     int tmp=0;
 
-    CV1=CV1 * (MAX_PW-MIN_PW);
+    CV1=CV1/100 * (MAX_PW-MIN_PW);
   //  CV1=CV1+MIN_PW;
 
     tmp=(int) CV1;
@@ -30,7 +30,7 @@ void ArduComm::PrepareString(double CV1, double CV2){
     ArduString+=to_string(tmp);
     ArduString+="C";
 
-    CV2=CV2 * (MAX_PW-MIN_PW);
+    CV2=CV2/100 * (MAX_PW-MIN_PW);
    // CV2=CV2+MIN_PW;
 
 
