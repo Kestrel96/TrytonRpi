@@ -122,6 +122,7 @@ int main()
 
         ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV);
 
+        serialFlush(SerialID);
         serialPuts(SerialID,ARD.ArduString.c_str());
         serialFlush(SerialID);
 

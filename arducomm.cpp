@@ -62,3 +62,7 @@ void ArduComm::PrepareString(double CV1, double CV2){
     ArduString+='\n';
 
 }
+
+//A450C250EZ
+//B325C125EZ
+//A300D240EZ
