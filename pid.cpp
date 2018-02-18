@@ -3,7 +3,7 @@
 
 #include<iostream>
 #define MAX_CV 100
-#define MIN_CV 0 //np dla drona min 0, dla trytona min -100 (windup)
+#define MIN_CV -100 //np dla drona min 0, dla trytona min -100 (windup)
 
 
 using namespace std;
