@@ -117,7 +117,7 @@ int main()
         ReceiveSocket.receive(Data,IP,receivePort);
         Data>>Roll_SP>>Pitch_SP;
         Roll_SP=10*0.01*Roll_SP;
-        Pitch_SP=(10/100)*Pitch_SP;
+        Pitch_SP=(double )(10/100)*Pitch_SP;
         cout<<"SPR,SPP:"<<Roll_SP<<" | "<<Pitch_SP<<endl;
         Data.clear();
 
