@@ -76,10 +76,12 @@ int main()
     double dtt=0;
     double offset_t=0;
 
-    double SP=0;
+
+    double Roll_SP=0;
+    double Pitch_SP=0;
     double dt=10; //ms
 
-    Roll_PID.Tuning(10,10,10,10);
+   // Roll_PID.Tuning(10,10,10,10);
 
 
     clock.restart();
@@ -94,8 +96,8 @@ int main()
 
         MPU.PrintAll();
         if(t.asMilliseconds()>=dt){
-            Roll_PID.Compute(SP,MPU.roll,40,5);
-            Pitch_PID.Compute(SP,MPU.pitch,40,5);
+            Roll_PID.Compute(Roll_SP,MPU.roll,40,5);
+            Pitch_PID.Compute(Pitch_SP,MPU.pitch,40,5);
         }
 
         cout<<"Roll PID:"<<endl;
@@ -113,6 +115,11 @@ int main()
         Data.clear();
 
         ReceiveSocket.receive(Data,IP,receivePort);
+        Data>>Roll_SP>>Pitch_SP;
+        Roll_SP=10/100*Roll_SP;
+        Pitch_SP=10/100*Pitch_Sp;
+        Data.clear();
+
         ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
         PIDPacket>>kpt>>Kit>>Kdt>>dtt>>offset_t;
         Roll_PID.Tuning(kpt,Kit,Kdt,dtt);
