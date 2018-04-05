@@ -7,7 +7,7 @@ class PID
 public:
 
     PID();
-    void Compute(double sp, double pv, double WP, double PD_on_big_e);
+    void Compute(double sp, double pv, double PD_on_big_e);
     void Tuning(double kp, double Ki, double Kd, double dt);
     void Reset();
     void Print();

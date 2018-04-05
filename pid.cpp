@@ -3,7 +3,7 @@
 
 #include<iostream>
 #define MAX_CV 100
-#define MIN_CV -100 //np dla drona min 0, dla trytona min -100 (windup)
+#define MIN_CV -100 //np dla drona min 0, dla trytona min -100
 
 
 using namespace std;
@@ -19,7 +19,7 @@ PID::PID()
 }
 
 
-void PID::Compute (double sp, double pv,double WP, double PD_on_big_e){
+void PID::Compute (double sp, double pv, double PD_on_big_e){
 
     SP=sp;
     e=SP-pv;
@@ -35,7 +35,7 @@ void PID::Compute (double sp, double pv,double WP, double PD_on_big_e){
         e_sum=0;
     }
 
-    CV=P+I+D+WP;
+    CV=P+I+D;
 
     if (CV>=MAX_CV){
         CV=MAX_CV;

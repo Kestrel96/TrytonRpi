@@ -128,7 +128,7 @@ int main()
         Pitch_PID.Tuning(kpt,Kit,Kdt,dtt);
         PIDPacket.clear();
 
-        ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV);
+        ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,);
 
         serialFlush(SerialID);
         serialPuts(SerialID,ARD.ArduString.c_str());
