@@ -96,6 +96,7 @@ int main()
 
         MPU.PrintAll();
         if(t.asMilliseconds()>=dt){
+
             MPU.XGyro();
             MPU.YGyro();
             MPU.ZGyro();
@@ -137,11 +138,11 @@ int main()
         Pitch_PID.Tuning(kpt,Kit,Kdt,dtt);
         PIDPacket.clear();
 
-        ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,Throttle_X,Throttle_Z);
+//        ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,Throttle_X,Throttle_Z);
 
-        serialFlush(SerialID);
-        serialPuts(SerialID,ARD.ArduString.c_str());
-        serialFlush(SerialID);
+//        serialFlush(SerialID);
+//        serialPuts(SerialID,ARD.ArduString.c_str());
+//        serialFlush(SerialID);
 
         system("clear");
     }
