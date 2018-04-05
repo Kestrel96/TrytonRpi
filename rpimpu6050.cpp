@@ -94,6 +94,18 @@ void RpiMPU6050::ZAcc(){
     this->az=ReadAccelerometer(ACCEL_ZH,ACCEL_ZL);
 }
 
+void RpiMPU6050::XGyro(){
+
+    gx=ReadGyro(GYRO_XH,GYRO_XL);
+}
+
+void RpiMPU6050::YGyro(){
+    gy=ReadGyro(GYRO_YH,GYRO_YL);
+}
+
+void RpiMPU6050::ZGyro(){
+      gz=ReadGyro(GYRO_ZH,GYRO_ZL);
+}
 
 
 double RpiMPU6050::ReadAccelerometer(int reg_H, int reg_L){
@@ -113,12 +125,31 @@ double RpiMPU6050::ReadAccelerometer(int reg_H, int reg_L){
 
 }
 
+double RpiMPU6050::ReadGyro(int reg_H, int reg_L){
+    double a=0;
+    uint8_t tmp=0;
+    int16_t a16=0;
+    a16=wiringPiI2CReadReg8(this->fd,reg_H);
+    tmp=wiringPiI2CReadReg8(this->fd,reg_L);
+    a16=a16<<8;
+    a16=a16 | tmp;
+    a=(double) a16;//GYRO_CONSTANT;
+
+
+   return a;
+}
+
 void RpiMPU6050::PrintAll(){
 
     cout<<"Akcelerometry: "<<endl;
     cout<<"ax :"<<this->ax<<"g"<<endl;
     cout<<"ay :"<<this->ay<<"g"<<endl;
     cout<<"az :"<<this->az<<"g"<<endl;
+    cout<<"Gyro: "<<endl;
+    cout<<"gx :"<<this->gx<<"deg"<<endl;
+    cout<<"gy :"<<this->gy<<"deg"<<endl;
+    cout<<"gz :"<<this->gz<<"deg"<<endl;
+    cout<<"Euler: "<<endl;
     cout<<"roll: "<<this->roll<<"deg"<<endl;
     cout<<"pitch: "<<this->pitch<<"deg"<<endl;
 
