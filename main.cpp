@@ -100,6 +100,7 @@ int main()
         MPU.XGYroAngle(elapsed_t);
         MPU.YGYroAngle(elapsed_t);
         MPU.ZGYroAngle(elapsed_t);
+        MPU.Yaw();
         MPU.Roll();
         MPU.Pitch();
         ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
