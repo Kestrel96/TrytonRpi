@@ -157,9 +157,9 @@ void RpiMPU6050::PrintAll(){
     cout<<"ay :"<<this->ay<<"g"<<endl;
     cout<<"az :"<<this->az<<"g"<<endl;
     cout<<"Gyro: "<<endl;
-    cout<<"gx :"<<this->gx<<"deg/s"<<" | "<<"XAngle: "<<gxA<<endl;
-    cout<<"gx :"<<this->gy<<"deg/s"<<" | "<<"YAngle: "<<gyA<<endl;
-    cout<<"gx :"<<this->gz<<"deg/s"<<" | "<<"ZAngle: "<<gzA<<endl;
+    cout<<"gx :"<<this->gx<<"deg/s"<<" | "<<"XAngle: "<<this->gxA<<endl;
+    cout<<"gx :"<<this->gy<<"deg/s"<<" | "<<"YAngle: "<<this->gyA<<endl;
+    cout<<"gx :"<<this->gz<<"deg/s"<<" | "<<"ZAngle: "<<this->gzA<<endl;
     cout<<"Euler: "<<endl;
     cout<<"roll: "<<this->roll<<"deg"<<endl;
     cout<<"pitch: "<<this->pitch<<"deg"<<endl;
