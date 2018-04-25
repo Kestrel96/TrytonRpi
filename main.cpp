@@ -67,6 +67,7 @@ int main()
     Packet PIDPacket;
     Clock clock;
     Time t;
+    double elapsed_t;
     t=sf::milliseconds(0);
     bool Switch=0;
 
@@ -83,14 +84,11 @@ int main()
     double Throttle_X=0;
     double Throttle_Y=0;
     double Throttle_Z=0;
-    double dt=60; //ms
 
-    // Roll_PID.Tuning(10,10,10,10);
-
-
-    clock.restart();
+       clock.restart();
     while(1){
 
+        elapsed_t=(double)t.asMilliseconds();
         t=clock.restart();
         MPU.XAcc();
         MPU.YAcc();
@@ -98,13 +96,24 @@ int main()
         MPU.XGyro();
         MPU.YGyro();
         MPU.ZGyro();
-        MPU.XGYroAngle(t);
-        MPU.YGYroAngle(t);
-        MPU.ZGYroAngle(t);
+        MPU.XGYroAngle(elapsed_t);
+        MPU.YGYroAngle(elapsed_t);
+        MPU.ZGYroAngle(elapsed_t);
         MPU.Roll();
         MPU.Pitch();
+        ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
 
-        MPU.PrintAll();               
+        PIDPacket>>kpt>>Kit>>Kdt>>dtt;
+        Roll_PID.Tuning(kpt,Kit,Kdt,t.asSeconds());
+
+        PIDPacket>>kpt>>Kit>>Kdt>>dtt;
+        Pitch_PID.Tuning(kpt,Kit,Kdt,t.asSeconds());
+
+        PIDPacket.clear();
+
+        MPU.PrintAll();
+
+
 
             Roll_PID.Compute(Roll_SP,MPU.roll);
             Pitch_PID.Compute(Pitch_SP,MPU.pitch);
@@ -134,17 +143,7 @@ int main()
         }
 
         cout<<"SPR,SPP:"<<Roll_SP<<" | "<<Pitch_SP<<endl;
-        Data.clear();
-
-        ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
-
-        PIDPacket>>kpt>>Kit>>Kdt>>dtt;
-        Roll_PID.Tuning(kpt,Kit,Kdt,t);
-
-        PIDPacket>>kpt>>Kit>>Kdt>>dtt;
-        Pitch_PID.Tuning(kpt,Kit,Kdt,t);
-
-        PIDPacket.clear();
+        Data.clear();       
 
        // ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,Throttle_X,Throttle_Z);
 
@@ -152,7 +151,7 @@ int main()
         serialPuts(SerialID,ARD.ArduString.c_str());
         serialFlush(SerialID);
 
-        cout<<"t:"<<t.asMilliseconds()<<"ms"<<" | "<<"dt: "<<dt<<endl;
+        cout<<"t:"<<t.asMilliseconds()<<"ms"<<" | "<<"dt: "<<elapsed<<endl;
 
         system("clear");
 
