@@ -91,16 +91,15 @@ void RpiMPU6050::ZAcc(){
 }
 
 void RpiMPU6050::XGyro(){
-
-    gx=ReadGyro(GYRO_XH,GYRO_XL);
+    gx=ReadGyro(GYRO_XH,GYRO_XL)-gxOffset;
 }
 
 void RpiMPU6050::YGyro(){
-    gy=ReadGyro(GYRO_YH,GYRO_YL);
+    gy=ReadGyro(GYRO_YH,GYRO_YL)-gyOffset;
 }
 
 void RpiMPU6050::ZGyro(){
-      gz=ReadGyro(GYRO_ZH,GYRO_ZL);
+      gz=ReadGyro(GYRO_ZH,GYRO_ZL)-gzOffset;
 }
 
 
@@ -148,6 +147,24 @@ void RpiMPU6050::YGYroAngle(double dt){
 void RpiMPU6050::ZGYroAngle(double dt){
     gzA=gzA+gz*dt*0.001;
 
+}
+
+void RpiMPU6050::CalculateOffset(){
+    gxOffset=0;
+    gyOffset=0;
+    gzOffset=0;
+    int l = 100;
+    for(int i=0;i<l;i++){
+        XGyro();
+        YGyro();
+        ZGyro();
+        gxOffset=gxOffset+ReadGyro(GYRO_XH,GYRO_XL);
+        gzOffset=gzOffset+ReadGyro(GYRO_YH,GYRO_YL);
+        gyOffset=gyOffset+ReadGyro(GYRO_ZH,GYRO_ZL);
+    }
+    gxOffset=gxOffset/l;
+    gzOffset=gzOffset/l;
+    gyOffset=gyOffset/l;
 }
 
 void RpiMPU6050::PrintAll(){

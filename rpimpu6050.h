@@ -10,7 +10,7 @@ public:
 
     int fd;
     //trzeba to dac jako private
-    double ax, ay, az, gx, gy, gz, yaw,pitch,roll,gxA,gyA,gzA;
+    double ax, ay, az, gx, gy, gz, yaw,pitch,roll,gxA,gyA,gzA,gzOffset,gxOffset,gyOffset;
     RpiMPU6050(int idDev);
     double ReadAccelerometer(int reg_H, int reg_L);
     double ReadGyro(int reg_H, int reg_L);
@@ -27,6 +27,7 @@ public:
     void XGYroAngle(double dt);
     void YGYroAngle(double dt);
     void ZGYroAngle(double dt);
+    void CalculateOffset();
 
 
     void Yaw();
