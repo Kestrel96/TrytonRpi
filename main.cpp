@@ -84,6 +84,7 @@ int main()
     double Throttle_X=0;
     double Throttle_Y=0;
     double Throttle_Z=0;
+    MPU.CalculateOffset();
 
        clock.restart();
     while(1){
