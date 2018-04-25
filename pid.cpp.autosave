@@ -1,6 +1,4 @@
 #include "pid.h"
-
-
 #include<iostream>
 #define MAX_CV 100
 #define MIN_CV 0
@@ -27,6 +25,7 @@ void PID::Compute (double sp, double pv){
     D=Kd*(e-last_e)/dt;
 
     last_e=e;
+    
     e_sum+=e;
 
 
