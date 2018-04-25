@@ -10,7 +10,7 @@ class ArduComm
 {
 public:
     ArduComm();
-    void PrepareString(double CV1, double CV2, double CV3, double Throttle_X, double Throttle_Z);
+    void PrepareString(double Pitch_CV, double Roll_CV, double Yaw_CV, double Throttle_Y, double Throttle_Z);
     string ArduString;
 
 };

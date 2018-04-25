@@ -103,11 +103,7 @@ int main()
 
         MPU.PrintAll();
 
-        if(t.asMilliseconds()>=dt){
-
-            MPU.gx=MPU.gx*dt*0.001;
-            MPU.gy=MPU.gy*dt*0.001;
-            MPU.gz=MPU.gz*dt*0.001;
+        if(t.asMilliseconds()>=dt){          
 
             Roll_PID.Compute(Roll_SP,MPU.roll);
             Pitch_PID.Compute(Pitch_SP,MPU.pitch);

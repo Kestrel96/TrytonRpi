@@ -42,6 +42,7 @@ using namespace std;
 #define GYRO_ZL     0x48
 
 #define ACCEL_CONSTANT 16834
+#define GYRO_CONSTANT 131
 
 
 
@@ -128,7 +129,7 @@ double RpiMPU6050::ReadGyro(int reg_H, int reg_L){
     tmp=wiringPiI2CReadReg8(this->fd,reg_L);
     a16=a16<<8;
     a16=a16 | tmp;
-    a=(double) a16;//GYRO_CONSTANT;
+    a=(double) a16/GYRO_CONSTANT;
 
 
    return a;

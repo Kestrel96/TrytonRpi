@@ -6,6 +6,7 @@
 #define MIN_PW 1000
 #define MAX_CV 500
 #define MIN_CV 0
+#define ZERO_POINT 50
 
 using namespace std;
 
@@ -14,13 +15,29 @@ ArduComm::ArduComm()
 
 }
 
+int tmp=0;
 
-void ArduComm::PrepareString(double CV1, double CV2, double CV3, double Throttle_X, double Throttle_Z){
+int MOT1,MOT2,MOT3,MOT4,MOT5,MOT6;
+
+void ArduComm::PrepareString(double Pitch_CV, double Roll_CV, double Yaw_CV, double Throttle_Y, double Throttle_Z){
 
     ArduString+="B";
 
     ArduString+="A";
-    ArduString+=to_string(CV1*500*0.01);
+
+    if(Pitch_CV>=ZERO_POINT){
+        //gora glowny
+       tmp=0;
+       tmp=(int) (Throttle_Y+Pitch_CV*MAX_CV*0.01);
+       ArduString+=to_string(tmp);
+       ArduString+="A";
+       tmp=0;
+       tmp=(int) (Throttle_Y+Pitch_CV*MAX_CV*0.01);
+
+
+
+    }
+
     ArduString+="A";
     ArduString+=to_string(CV1*500*0.01);
     ArduString+="A";
