@@ -98,19 +98,17 @@ int main()
         MPU.XGyro();
         MPU.YGyro();
         MPU.ZGyro();
-        MPU.XGYroAngle(dt);
-        MPU.YGYroAngle(dt);
-        MPU.ZGYroAngle(dt);
+        MPU.XGYroAngle(t);
+        MPU.YGYroAngle(t);
+        MPU.ZGYroAngle(t);
         MPU.Roll();
         MPU.Pitch();
 
-        MPU.PrintAll();
-
-        if(t.asMilliseconds()>=dt){          
+        MPU.PrintAll();               
 
             Roll_PID.Compute(Roll_SP,MPU.roll);
             Pitch_PID.Compute(Pitch_SP,MPU.pitch);
-        }
+
 
         cout<<"Roll PID:"<<endl;
         Roll_PID.Print();
@@ -141,11 +139,10 @@ int main()
         ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
 
         PIDPacket>>kpt>>Kit>>Kdt>>dtt;
-        Roll_PID.Tuning(kpt,Kit,Kdt,dtt);
+        Roll_PID.Tuning(kpt,Kit,Kdt,t);
 
         PIDPacket>>kpt>>Kit>>Kdt>>dtt;
-        Pitch_PID.Tuning(kpt,Kit,Kdt,dtt);
-        dt=dtt;
+        Pitch_PID.Tuning(kpt,Kit,Kdt,t);
 
         PIDPacket.clear();
 
