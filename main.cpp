@@ -119,7 +119,7 @@ int main()
 
         Pitch_PID.Print();
 
-        cout<<"String:"<<ARD.ArduString<<endl;
+        //cout<<"String:"<<ARD.ArduString<<endl;
         Data.clear();
 
         Data<<MPU.yaw<<MPU.pitch<<MPU.roll<<Roll_PID.CV<<Pitch_PID.CV;
@@ -150,7 +150,7 @@ int main()
 
         PIDPacket.clear();
 
-        ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,Throttle_X,Throttle_Z);
+       // ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,Throttle_X,Throttle_Z);
 
         serialFlush(SerialID);
         serialPuts(SerialID,ARD.ArduString.c_str());
