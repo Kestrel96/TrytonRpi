@@ -98,6 +98,9 @@ int main()
         MPU.XGyro();
         MPU.YGyro();
         MPU.ZGyro();
+        MPU.XGYroAngle(dt);
+        MPU.YGYroAngle(dt);
+        MPU.ZGYroAngle(dt);
         MPU.Roll();
         MPU.Pitch();
 
@@ -152,7 +155,8 @@ int main()
         serialPuts(SerialID,ARD.ArduString.c_str());
         serialFlush(SerialID);
 
-        cout<<"t:"<<t.asMilliseconds()<<"ms"<<endl;
+        cout<<"t:"<<t.asMilliseconds()<<"ms"<<" | "<<"dt: "<<dt<<endl;
+
         system("clear");
 
     }
