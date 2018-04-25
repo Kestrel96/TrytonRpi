@@ -25,34 +25,34 @@ void ArduComm::PrepareString(double Pitch_CV, double Roll_CV, double Yaw_CV, dou
 
     ArduString+="A";
 
-    if(Pitch_CV>=ZERO_POINT){
-        //gora glowny
-       tmp=0;
-       tmp=(int) (Throttle_Y+Pitch_CV*MAX_CV*0.01);
-       ArduString+=to_string(tmp);
-       ArduString+="A";
-       tmp=0;
-       tmp=(int) (Throttle_Y+Pitch_CV*MAX_CV*0.01);
+//    if(Pitch_CV>=ZERO_POINT){
+//        //gora glowny
+//       tmp=0;
+//       tmp=(int) (Throttle_Y+Pitch_CV*MAX_CV*0.01);
+//       ArduString+=to_string(tmp);
+//       ArduString+="A";
+//       tmp=0;
+//       tmp=(int) (Throttle_Y+Pitch_CV*MAX_CV*0.01);
 
 
 
-    }
+//    }
 
-    ArduString+="A";
-    ArduString+=to_string(CV1*500*0.01);
-    ArduString+="A";
-    ArduString+=to_string(CV1*500*0.01);
+//    ArduString+="A";
+//    ArduString+=to_string(CV1*500*0.01);
+//    ArduString+="A";
+//    ArduString+=to_string(CV1*500*0.01);
 
-    ArduString+="A";
-    ArduString+=to_string(CV2*500*0.01);
-    ArduString+="A";
-    ArduString+=to_string(CV2*500*0.01);
-    ArduString+="A";
-    ArduString+=to_string(CV2*500*0.01);
+//    ArduString+="A";
+//    ArduString+=to_string(CV2*500*0.01);
+//    ArduString+="A";
+//    ArduString+=to_string(CV2*500*0.01);
+//    ArduString+="A";
+//    ArduString+=to_string(CV2*500*0.01);
 
-    ArduString+='E';
-    ArduString+='Z';
-    ArduString+='\n';
+//    ArduString+='E';
+//    ArduString+='Z';
+//    ArduString+='\n';
 
 }
 
