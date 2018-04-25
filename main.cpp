@@ -27,15 +27,16 @@ using namespace sf;
 int main()
 {
     if(wiringPiSetup() == -1){
+        cout<<"WiringPi setup fail!"
         int x;
         cin>>x;
-    exit(1);
+        exit(1);
     }
 
     int SerialID=0;
 
-   SerialID=serialOpen("/dev/ttyAMA0", 115200);
-   cout<<SerialID<<endl;
+    SerialID=serialOpen("/dev/ttyAMA0", 115200);
+    cout<<SerialID<<endl;
 
     RpiMPU6050 MPU(MPU_6050_ADDRESS);
 
@@ -56,10 +57,10 @@ int main()
     unsigned short int PIDreceivePort=5678;
 
     if(ReceiveSocket.bind(receivePort)!=ReceiveSocket.Done){
-         cout<<"socket binding error!";
-               int x;
-         cin>>x;
-         exit(1);
+        cout<<"socket binding error!";
+        int x;
+        cin>>x;
+        exit(1);
     }
 
     Packet Data;
@@ -67,21 +68,24 @@ int main()
     Clock clock;
     Time t;
     t=sf::milliseconds(0);
+    bool Switch=0;
 
     double kpt=0;
     double Kit=0;
     double Kdt=0;
     double dtt=0;
-    double offset_t=0;
 
 
+
+    double Yaw_SP=0;
     double Roll_SP=0;
     double Pitch_SP=0;
     double Throttle_X=0;
+    double Throttle_Y=0;
     double Throttle_Z=0;
-    double dt=10; //ms
+    double dt=60; //ms
 
-   // Roll_PID.Tuning(10,10,10,10);
+    // Roll_PID.Tuning(10,10,10,10);
 
 
     clock.restart();
@@ -91,21 +95,22 @@ int main()
         MPU.XAcc();
         MPU.YAcc();
         MPU.ZAcc();
+        MPU.XGyro();
+        MPU.YGyro();
+        MPU.ZGyro();
         MPU.Roll();
         MPU.Pitch();
 
         MPU.PrintAll();
+
         if(t.asMilliseconds()>=dt){
 
-            MPU.XGyro();
-            MPU.YGyro();
-            MPU.ZGyro();
             MPU.gx=MPU.gx*dt*0.001;
             MPU.gy=MPU.gy*dt*0.001;
             MPU.gz=MPU.gz*dt*0.001;
 
-            Roll_PID.Compute(Roll_SP,MPU.roll,5);
-            Pitch_PID.Compute(Pitch_SP,MPU.pitch,5);
+            Roll_PID.Compute(Roll_SP,MPU.roll);
+            Pitch_PID.Compute(Pitch_SP,MPU.pitch);
         }
 
         cout<<"Roll PID:"<<endl;
@@ -113,9 +118,7 @@ int main()
         cout<<"Pitch PID:"<<endl;
 
         Pitch_PID.Print();
-        t.asMilliseconds();
 
-        cout<<"t:"<<t.asMilliseconds()<<"ms"<<endl;
         cout<<"String:"<<ARD.ArduString<<endl;
         Data.clear();
 
@@ -125,26 +128,37 @@ int main()
         Data.clear();
 
         ReceiveSocket.receive(Data,IP,receivePort);
-        Data>>Roll_SP>>Pitch_SP>>Throttle_X>>Throttle_Z;
-        Roll_SP=10*0.01*Roll_SP;
-        Pitch_SP=10*Pitch_SP/100;
+        Data>>Switch;
+        if(Switch==0){
+            Data>>Yaw_SP>>Throttle_Y>>Roll_SP>>Throttle_Z;
+        }
+        if(Switch==1){
+            Data>>Pitch_SP>>Throttle_X>>Throttle_Z;
+        }
+
         cout<<"SPR,SPP:"<<Roll_SP<<" | "<<Pitch_SP<<endl;
         Data.clear();
 
         ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
-        PIDPacket>>kpt>>Kit>>Kdt>>dtt>>offset_t;
+
+        PIDPacket>>kpt>>Kit>>Kdt>>dtt;
         Roll_PID.Tuning(kpt,Kit,Kdt,dtt);
-        PIDPacket>>kpt>>Kit>>Kdt>>dtt>>offset_t;
+
+        PIDPacket>>kpt>>Kit>>Kdt>>dtt;
         Pitch_PID.Tuning(kpt,Kit,Kdt,dtt);
+        dt=dtt;
+
         PIDPacket.clear();
 
-//        ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,Throttle_X,Throttle_Z);
+        ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,Throttle_X,Throttle_Z);
 
-//        serialFlush(SerialID);
-//        serialPuts(SerialID,ARD.ArduString.c_str());
-//        serialFlush(SerialID);
+        serialFlush(SerialID);
+        serialPuts(SerialID,ARD.ArduString.c_str());
+        serialFlush(SerialID);
 
+        cout<<"t:"<<t.asMilliseconds()<<"ms"<<endl;
         system("clear");
+
     }
 
 
