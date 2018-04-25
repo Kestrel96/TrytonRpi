@@ -136,17 +136,17 @@ double RpiMPU6050::ReadGyro(int reg_H, int reg_L){
 }
 
 void RpiMPU6050::XGYroAngle(double dt){
-    gxA=gx+gx*dt*0.001;
+    gxA=gxA+gx*dt*0.001;
 
 }
 
 void RpiMPU6050::YGYroAngle(double dt){
-    gyA=gy+gy*dt*0.001;
+    gyA=gyA+gy*dt*0.001;
 
 }
 
 void RpiMPU6050::ZGYroAngle(double dt){
-    gzA=gz+gz*dt*0.001;
+    gzA=gzA+gz*dt*0.001;
 
 }
 
