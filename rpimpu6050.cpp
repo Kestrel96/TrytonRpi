@@ -135,6 +135,21 @@ double RpiMPU6050::ReadGyro(int reg_H, int reg_L){
    return a;
 }
 
+void RpiMPU6050::XGYroAngle(double dt){
+    gxA=gx*dt*0.001;
+
+}
+
+void RpiMPU6050::XGYroAngle(double dt){
+    gyA=gz*dt*0.001;
+
+}
+
+void RpiMPU6050::XGYroAngle(double dt){
+    gzA=gz*dt*0.001;
+
+}
+
 void RpiMPU6050::PrintAll(){
 
     cout<<"Akcelerometry: "<<endl;
@@ -142,9 +157,9 @@ void RpiMPU6050::PrintAll(){
     cout<<"ay :"<<this->ay<<"g"<<endl;
     cout<<"az :"<<this->az<<"g"<<endl;
     cout<<"Gyro: "<<endl;
-    cout<<"gx :"<<this->gx<<"deg"<<endl;
-    cout<<"gy :"<<this->gy<<"deg"<<endl;
-    cout<<"gz :"<<this->gz<<"deg"<<endl;
+    cout<<"gx :"<<this->gx<<"deg/s"<<" | "<<"XAngle: "<<gxA<<endl;
+    cout<<"gx :"<<this->gy<<"deg/s"<<" | "<<"YAngle: "<<gyA<<endl;
+    cout<<"gx :"<<this->gz<<"deg/s"<<" | "<<"ZAngle: "<<gzA<<endl;
     cout<<"Euler: "<<endl;
     cout<<"roll: "<<this->roll<<"deg"<<endl;
     cout<<"pitch: "<<this->pitch<<"deg"<<endl;
