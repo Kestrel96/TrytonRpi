@@ -140,12 +140,12 @@ void RpiMPU6050::XGYroAngle(double dt){
 
 }
 
-void RpiMPU6050::XGYroAngle(double dt){
+void RpiMPU6050::YGYroAngle(double dt){
     gyA=gz*dt*0.001;
 
 }
 
-void RpiMPU6050::XGYroAngle(double dt){
+void RpiMPU6050::ZGYroAngle(double dt){
     gzA=gz*dt*0.001;
 
 }
