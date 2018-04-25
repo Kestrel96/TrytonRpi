@@ -27,7 +27,7 @@ using namespace sf;
 int main()
 {
     if(wiringPiSetup() == -1){
-        cout<<"WiringPi setup fail!"
+        cout<<"WiringPi setup fail!";
         int x;
         cin>>x;
         exit(1);
