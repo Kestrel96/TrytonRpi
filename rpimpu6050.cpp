@@ -159,8 +159,9 @@ void RpiMPU6050::CalculateOffset(){
         YGyro();
         ZGyro();
         gxOffset=gxOffset+ReadGyro(GYRO_XH,GYRO_XL);
-        gzOffset=gzOffset+ReadGyro(GYRO_YH,GYRO_YL);
-        gyOffset=gyOffset+ReadGyro(GYRO_ZH,GYRO_ZL);
+        gyOffset=gyOffset+ReadGyro(GYRO_YH,GYRO_YL);
+        gzOffset=gzOffset+ReadGyro(GYRO_ZH,GYRO_ZL);
+
     }
     gxOffset=gxOffset/l;
     gzOffset=gzOffset/l;
