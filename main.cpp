@@ -151,7 +151,7 @@ int main()
         serialPuts(SerialID,ARD.ArduString.c_str());
         serialFlush(SerialID);
 
-        cout<<"t:"<<t.asMilliseconds()<<"ms"<<" | "<<"dt: "<<elapsed<<endl;
+        cout<<"t:"<<t.asMilliseconds()<<"ms"<<" | "<<"dt: "<<elapsed_t<<endl;
 
         system("clear");
 
