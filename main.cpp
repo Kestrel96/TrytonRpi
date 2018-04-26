@@ -140,8 +140,7 @@ int main()
 
         ReceiveSocket.receive(Data,IP,receivePort);
 
-            Data>>Yaw_SP>>Pitch_SP>>Roll_SP>>Throttle_X>>Throttle_Y>>Throttle_Z;
-
+        Data>>Yaw_SP>>Pitch_SP>>Roll_SP>>Throttle_X>>Throttle_Y>>Throttle_Z;
 
         cout<<"RSP,PSP,YSP:"<<Roll_SP<<" | "<<Pitch_SP<<" | "<<Yaw_SP<<endl;
         Data.clear();

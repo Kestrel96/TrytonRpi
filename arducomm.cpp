@@ -4,55 +4,39 @@
 
 #define MAX_PW 2000
 #define MIN_PW 1000
-#define MAX_CV 500
+#define MAX_CV 1000
 #define MIN_CV 0
 #define ZERO_POINT 50
 
 using namespace std;
+
+int UP_MAIN=0;
+int UP_WING=0;
+int L_MAIN=0;
+int L_WING=0;
+int R_MAIN=0;
+int R_WING=0;
+double tmp=0;
 
 ArduComm::ArduComm()
 {
 
 }
 
-int tmp=0;
-
-int MOT1,MOT2,MOT3,MOT4,MOT5,MOT6;
 
 void ArduComm::PrepareString(double Pitch_CV, double Roll_CV, double Yaw_CV, double Throttle_Y, double Throttle_Z){
 
+    ArduString="";
     ArduString+="B";
 
+    //up main
     ArduString+="A";
+    tmp=Throttle_Y+Pitch_CV*0.01;
+    UP_MAIN=(int) tmp;
+    tmp=0;
+    ArduString+=to_string(UP_MAIN);
 
-//    if(Pitch_CV>=ZERO_POINT){
-//        //gora glowny
-//       tmp=0;
-//       tmp=(int) (Throttle_Y+Pitch_CV*MAX_CV*0.01);
-//       ArduString+=to_string(tmp);
-//       ArduString+="A";
-//       tmp=0;
-//       tmp=(int) (Throttle_Y+Pitch_CV*MAX_CV*0.01);
-
-
-
-//    }
-
-//    ArduString+="A";
-//    ArduString+=to_string(CV1*500*0.01);
-//    ArduString+="A";
-//    ArduString+=to_string(CV1*500*0.01);
-
-//    ArduString+="A";
-//    ArduString+=to_string(CV2*500*0.01);
-//    ArduString+="A";
-//    ArduString+=to_string(CV2*500*0.01);
-//    ArduString+="A";
-//    ArduString+=to_string(CV2*500*0.01);
-
-//    ArduString+='E';
-//    ArduString+='Z';
-//    ArduString+='\n';
+    ArduString+="EZ";
 
 }
 
