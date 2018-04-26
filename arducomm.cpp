@@ -6,7 +6,7 @@
 #define MIN_PW 1000
 #define MAX_CV 1000
 #define MIN_CV 0
-#define ZERO_POINT 50
+#define ZERO_POINT 1500
 
 using namespace std;
 
@@ -31,7 +31,7 @@ void ArduComm::PrepareString(double Yaw_CV, double Pitch_CV, double Roll_CV, dou
 
     //up main
     ArduString+="A";
-    tmp=Throttle_Y+Pitch_CV*0.01*500+MIN_PW;
+    tmp=Throttle_Y+Pitch_CV*0.01*500+ZERO_POINT;
     cout<<"tmp: "<<tmp<<endl;
     UP_MAIN=(int) tmp;
     cout<<"UP: "<<UP_MAIN<<endl;
