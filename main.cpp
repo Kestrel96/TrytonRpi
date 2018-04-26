@@ -136,9 +136,9 @@ int main()
 
         MPU.PrintAll();
 
-        Yaw_PID.Compute(Yaw_SP,MPU.yaw);
-        Roll_PID.Compute(Roll_SP,MPU.roll);
-        Pitch_PID.Compute(Pitch_SP,MPU.pitch);
+        Yaw_PID.Compute(Yaw_SP,MPU.yaw,5);
+        Roll_PID.Compute(Roll_SP,MPU.roll,5);
+        Pitch_PID.Compute(Pitch_SP,MPU.pitch,5);
 
         cout<<"Yaw PID"<<endl;
         Yaw_PID.Print();
