@@ -183,6 +183,7 @@ void RpiMPU6050::PrintAll(){
     cout<<"gx :"<<this->gy<<"deg/s"<<" | "<<"YAngle: "<<this->gyA<<" | "<<"Yoffset: "<<gyOffset<<endl;
     cout<<"gx :"<<this->gz<<"deg/s"<<" | "<<"ZAngle: "<<this->gzA<<" | "<<"ZAngle: "<<gzOffset<<endl;
     cout<<"Euler: "<<endl;
+    cout<<"yaw: "<<this->yaw<<"deg"<<endl;
     cout<<"roll: "<<this->roll<<"deg"<<endl;
     cout<<"pitch: "<<this->pitch<<"deg"<<endl;
 

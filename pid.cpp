@@ -6,7 +6,7 @@
 using namespace std;
 PID::PID()
 {
-    Ki=1000;
+    Ki=1;
     Kd=1;
     kp=0;
     e=0;
