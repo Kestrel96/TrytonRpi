@@ -118,8 +118,6 @@ int main()
         PIDPacket>>Yaw_PID.kp>>Yaw_PID.Ki>>Yaw_PID.Kd>>Pitch_PID.kp>>Pitch_PID.Ki>>Pitch_PID.Kd>>Roll_PID.kp>>Roll_PID.Ki>>Roll_PID.Kd;
         PIDPacket.clear();
 
-        Yaw_PID.I=0;
-        Yaw_PID.D=0;
         Yaw_PID.dt=elapsed_t;
         Pitch_PID.dt=elapsed_t;
         Roll_PID.dt=elapsed_t;
@@ -140,6 +138,7 @@ int main()
         MPU.PrintAll();
 
         Yaw_PID.Compute(Yaw_SP,MPU.yaw);
+        Yaw_PID.I=0; Yaw_PID.D=0;
         Roll_PID.Compute(Roll_SP,MPU.roll);
         Pitch_PID.Compute(Pitch_SP,MPU.pitch);
 

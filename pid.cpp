@@ -21,20 +21,12 @@ void PID::Compute (double sp, double pv){
     SP=sp;
     e=SP-pv;
     P=kp*e;
-    //I=Ki*e_sum*dt;
     I=Ki*e_sum;
     D=Kd*(e-last_e)/dt;
 
     last_e=e;
 
     e_sum+=e*dt;
-
-//    if(e>=PD_on_big_e){
-//        e_sum=0;
-//    }
-//    if(e<=-PD_on_big_e){
-//        e_sum=0;
-//    }
 
 
     CV=P+I+D;
