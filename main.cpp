@@ -40,6 +40,7 @@ int main()
 
     RpiMPU6050 MPU(MPU_6050_ADDRESS);
 
+    PID Yaw_PID;
     PID Pitch_PID;
     PID Roll_PID;
     ArduComm ARD;
@@ -86,7 +87,7 @@ int main()
     double Throttle_Z=0;
     MPU.CalculateOffset();
 
-       clock.restart();
+    clock.restart();
     while(1){
 
         elapsed_t=(double)t.asMilliseconds();
@@ -106,48 +107,46 @@ int main()
         ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
 
         PIDPacket>>kpt>>Kit>>Kdt>>dtt;
-        Roll_PID.Tuning(kpt,Kit,Kdt,t.asSeconds());
+        Roll_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
 
         PIDPacket>>kpt>>Kit>>Kdt>>dtt;
-        Pitch_PID.Tuning(kpt,Kit,Kdt,t.asSeconds());
+        Roll_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
+
+        PIDPacket>>kpt>>Kit>>Kdt>>dtt;
+        Pitch_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
 
         PIDPacket.clear();
 
         MPU.PrintAll();
 
+        Yaw_PID.Compute(Yaw_SP,MPU.yaw);
+        Roll_PID.Compute(Roll_SP,MPU.roll);
+        Pitch_PID.Compute(Pitch_SP,MPU.pitch);
 
-
-            Roll_PID.Compute(Roll_SP,MPU.roll);
-            Pitch_PID.Compute(Pitch_SP,MPU.pitch);
-
-
+        cout<<"Yaw PID"<<endl;
+        Yaw_PID.Print();
         cout<<"Roll PID:"<<endl;
         Roll_PID.Print();
         cout<<"Pitch PID:"<<endl;
-
         Pitch_PID.Print();
 
         //cout<<"String:"<<ARD.ArduString<<endl;
         Data.clear();
 
-        Data<<MPU.yaw<<MPU.pitch<<MPU.roll<<Roll_PID.CV<<Pitch_PID.CV;
+        Data<<MPU.yaw<<MPU.pitch<<MPU.roll<<Yaw_PID.CV<<Roll_PID.CV<<Pitch_PID.CV;
 
         SendSocket.send(Data,IP,port);
         Data.clear();
 
         ReceiveSocket.receive(Data,IP,receivePort);
-        Data>>Switch;
-        if(Switch==0){
-            Data>>Yaw_SP>>Throttle_Y>>Roll_SP>>Throttle_Z;
-        }
-        if(Switch==1){
-            Data>>Pitch_SP>>Throttle_X>>Throttle_Z;
-        }
+
+            Data>>Yaw_SP>>Pitch_SP>>Roll_SP>>Throttle_X>>Throttle_Y>>Throttle_Z;
+
 
         cout<<"SPR,SPP:"<<Roll_SP<<" | "<<Pitch_SP<<endl;
-        Data.clear();       
+        Data.clear();
 
-       // ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,Throttle_X,Throttle_Z);
+        // ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,Throttle_X,Throttle_Z);
 
         serialFlush(SerialID);
         serialPuts(SerialID,ARD.ArduString.c_str());
