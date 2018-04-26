@@ -148,8 +148,12 @@ int main()
         Roll_PID.Print();
 
 
-        ARD.PrepareString(Yaw_PID.CV,Pitch_PID.CV,Roll_PID.CV,Throttle_Y,Throttle_Z);
+        ARD.PrepareString(Yaw_PID.CV,50,Roll_PID.CV,Throttle_Y,Throttle_Z);
         cout<<"String:"<<ARD.ArduString<<endl;
+        serialFlush(SerialID);
+        serialPuts(SerialID,ARD.ArduString.c_str());
+        serialFlush(SerialID);
+
         Data.clear();
 
         Data<<MPU.yaw<<MPU.pitch<<MPU.roll<<Yaw_PID.CV<<Pitch_PID.CV<<Roll_PID.CV;
@@ -165,11 +169,6 @@ int main()
         cout<<"Y,Z: "<<Throttle_Y<<" | "<<Throttle_Z<<endl;
         Data.clear();
 
-        // ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,Throttle_X,Throttle_Z);
-
-//        serialFlush(SerialID);
-//        serialPuts(SerialID,ARD.ArduString.c_str());
-//        serialFlush(SerialID);
 
         cout<<"t:"<<t.asMilliseconds()<<"ms"<<" | "<<"dt: "<<elapsed_t<<endl;
 
