@@ -153,9 +153,9 @@ int main()
 
         // ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,Throttle_X,Throttle_Z);
 
-        serialFlush(SerialID);
-        serialPuts(SerialID,ARD.ArduString.c_str());
-        serialFlush(SerialID);
+//        serialFlush(SerialID);
+//        serialPuts(SerialID,ARD.ArduString.c_str());
+//        serialFlush(SerialID);
 
         cout<<"t:"<<t.asMilliseconds()<<"ms"<<" | "<<"dt: "<<elapsed_t<<endl;
 
