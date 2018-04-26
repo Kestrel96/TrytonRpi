@@ -104,12 +104,14 @@ int main()
         MPU.Yaw();
         MPU.Roll();
         MPU.Pitch();
+
         ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
 
         PIDPacket>>kpt>>Kit>>Kdt;
         Yaw_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
 
         PIDPacket>>kpt>>Kit>>Kdt;
+        cout<<"kpt: "<<kpt<<endl;
         Pitch_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
 
         PIDPacket>>kpt>>Kit>>Kdt;
