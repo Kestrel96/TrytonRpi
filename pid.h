@@ -15,7 +15,6 @@ public:
 
     double CV;
 
-private:
 
     double kp;
     double Ki;
