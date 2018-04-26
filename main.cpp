@@ -162,6 +162,7 @@ int main()
         Data>>Yaw_SP>>Pitch_SP>>Roll_SP>>Throttle_X>>Throttle_Y>>Throttle_Z;
 
         cout<<"RSP,PSP,YSP:"<<Roll_SP<<" | "<<Pitch_SP<<" | "<<Yaw_SP<<endl;
+        cout<<"Y,Z: "<<Throttle_Y<<" | "<<Throttle_Z<<endl;
         Data.clear();
 
         // ARD.PrepareString(Roll_PID.CV,Pitch_PID.CV,0,Throttle_X,Throttle_Z);
