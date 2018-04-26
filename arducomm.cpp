@@ -67,7 +67,7 @@ void ArduComm::PrepareString(double Yaw_CV, double Pitch_CV, double Roll_CV,doub
     tmp=0;
     ArduString+=to_string(R_WING);
 
-    ArduString+="EZ\n";
+    ArduString+="EZ";
 
 }
 
