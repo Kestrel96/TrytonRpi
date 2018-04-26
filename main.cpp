@@ -152,6 +152,7 @@ int main()
         cout<<"String:"<<ARD.ArduString<<endl;
         serialFlush(SerialID);
         serialPuts(SerialID,ARD.ArduString.c_str());
+        serialFlush(SerialID);
 
 
         Data.clear();
