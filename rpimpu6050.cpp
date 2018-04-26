@@ -71,13 +71,13 @@ void RpiMPU6050::Yaw(){
     this->yaw=gzA;
 }
 
-void RpiMPU6050::Roll(){
+void RpiMPU6050::Pitch(){
 
     this->roll=-atan2(this->ay,this->az)*180/M_PI;
 
 }
 
-void RpiMPU6050::Pitch(){
+void RpiMPU6050::Roll(){
     this->pitch=atan2(this->ax, sqrt(this->ay*this->ay + this->az*this->az))*180/M_PI;
 
 }
