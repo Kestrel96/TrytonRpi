@@ -24,7 +24,7 @@ ArduComm::ArduComm()
 }
 
 
-void ArduComm::PrepareString(double Pitch_CV, double Roll_CV, double Yaw_CV, double Throttle_Y, double Throttle_Z){
+void ArduComm::PrepareString(double Yaw_CV, double Pitch_CV, double Roll_CV, double Throttle_Y, double Throttle_Z){
 
     ArduString="";
     ArduString+="B";

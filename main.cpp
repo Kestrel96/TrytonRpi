@@ -116,7 +116,7 @@ int main()
 
         PIDsocket.receive(PIDPacket,IP,PIDreceivePort);
         PIDPacket>>Yaw_PID.kp>>Yaw_PID.Ki>>Yaw_PID.Kd>>Pitch_PID.kp>>Pitch_PID.Ki>>Pitch_PID.Kd>>Roll_PID.kp>>Roll_PID.Ki>>Roll_PID.Kd;
-
+        PIDPacket.clear();
 
 
 //        PIDPacket>>kpt>>Kit>>Kdt;
@@ -129,7 +129,7 @@ int main()
 //        PIDPacket>>kpt>>Kit>>Kdt;
 //        Roll_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
 
-        PIDPacket.clear();
+
 
         MPU.PrintAll();
 
@@ -139,16 +139,17 @@ int main()
 
         cout<<"Yaw PID"<<endl;
         Yaw_PID.Print();
-        cout<<"Roll PID:"<<endl;
-        Roll_PID.Print();
         cout<<"Pitch PID:"<<endl;
         Pitch_PID.Print();
+        cout<<"Roll PID:"<<endl;
+        Roll_PID.Print();
 
-        ARD.PrepareString(Pitch_PID.CV,Roll_PID.CV,Yaw_PID.CV,Throttle_Y,Throttle_Z);
+
+        ARD.PrepareString(Yaw_PID.CV,Pitch_PID.CV,Roll_PID.CV,Throttle_Y,Throttle_Z);
         cout<<"String:"<<ARD.ArduString<<endl;
         Data.clear();
 
-        Data<<MPU.yaw<<MPU.pitch<<MPU.roll<<Yaw_PID.CV<<Roll_PID.CV<<Pitch_PID.CV;
+        Data<<MPU.yaw<<MPU.pitch<<MPU.roll<<Yaw_PID.CV<<Pitch_PID.CV<<Roll_PID.CV;
 
         SendSocket.send(Data,IP,port);
         Data.clear();
