@@ -106,16 +106,19 @@ int main()
         MPU.Pitch();
 
         ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
+        PIDPacket>>Yaw_PID.kp>>Yaw_PID.Ki>>Yaw_PID.Kd>>Pitch_PID.kp>>Pitch_PID.Ki>>Pitch_PID.Kd>>Roll_PID.kp>>Roll_PID.Ki>>Roll_PID.kd;
 
-        PIDPacket>>kpt>>Kit>>Kdt;
-        Yaw_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
 
-        PIDPacket>>kpt>>Kit>>Kdt;
-        cout<<"kpt: "<<kpt<<endl;
-        Pitch_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
 
-        PIDPacket>>kpt>>Kit>>Kdt;
-        Roll_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
+//        PIDPacket>>kpt>>Kit>>Kdt;
+//        Yaw_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
+
+//        PIDPacket>>kpt>>Kit>>Kdt;
+//        cout<<"kpt: "<<kpt<<endl;
+//        Pitch_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
+
+//        PIDPacket>>kpt>>Kit>>Kdt;
+//        Roll_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
 
         PIDPacket.clear();
 
