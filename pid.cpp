@@ -16,7 +16,7 @@ PID::PID()
 }
 
 
-void PID::Compute (double sp, double pv){
+void PID::Compute (double sp, double pv, double PD_on_big_e){
 
     SP=sp;
     e=SP-pv;
@@ -27,6 +27,12 @@ void PID::Compute (double sp, double pv){
     last_e=e;
 
     e_sum+=e;
+    if(e>=PD_on_big_e){
+        e_sum=0;
+    }
+    if(e<=-PD_on_big_e){
+        e_sum=0;
+    }
 
 
     CV=P+I+D;
@@ -49,7 +55,7 @@ void PID::Tuning(double kp, double Ki, double Kd, double dt){
     this->kp=kp;
     this->Ki=Ki;
     this->Kd=Kd;
-    this->dt=dt/1000;
+   // this->dt=dt/1000;
 
 }
 

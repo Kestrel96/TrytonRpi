@@ -117,6 +117,9 @@ int main()
         PIDsocket.receive(PIDPacket,IP,PIDreceivePort);
         PIDPacket>>Yaw_PID.kp>>Yaw_PID.Ki>>Yaw_PID.Kd>>Pitch_PID.kp>>Pitch_PID.Ki>>Pitch_PID.Kd>>Roll_PID.kp>>Roll_PID.Ki>>Roll_PID.Kd;
         PIDPacket.clear();
+        Yaw_PID.dt=elapsed_t;
+        Pitch_PID.dt=elapsed_t;
+        Roll_PID.dt=elapsed_t;
 
 
 //        PIDPacket>>kpt>>Kit>>Kdt;
