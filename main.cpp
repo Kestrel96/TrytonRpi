@@ -49,7 +49,9 @@ int main()
 
     UdpSocket SendSocket;
     UdpSocket ReceiveSocket;
+    UdpSocket PIDsocket;
     SendSocket.setBlocking(false);
+    PIDsocket.setBlocking(false);
     ReceiveSocket.setBlocking(false);
     IpAddress IP="10.42.0.1";
 
@@ -58,6 +60,13 @@ int main()
     unsigned short int PIDreceivePort=5678;
 
     if(ReceiveSocket.bind(receivePort)!=ReceiveSocket.Done){
+        cout<<"socket binding error!";
+        int x;
+        cin>>x;
+        exit(1);
+    }
+
+    if(PIDsocket.bind(PIDreceivePort)!=ReceiveSocket.Done){
         cout<<"socket binding error!";
         int x;
         cin>>x;
@@ -105,7 +114,7 @@ int main()
         MPU.Roll();
         MPU.Pitch();
 
-        ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
+        PIDsocket.receive(PIDPacket,IP,PIDreceivePort);
         PIDPacket>>Yaw_PID.kp>>Yaw_PID.Ki>>Yaw_PID.Kd>>Pitch_PID.kp>>Pitch_PID.Ki>>Pitch_PID.Kd>>Roll_PID.kp>>Roll_PID.Ki>>Roll_PID.Kd;
 
 
