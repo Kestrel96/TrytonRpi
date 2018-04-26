@@ -1,7 +1,7 @@
 #include "pid.h"
 #include<iostream>
 #define MAX_CV 100
-#define MIN_CV 0
+#define MIN_CV -100
 
 using namespace std;
 PID::PID()

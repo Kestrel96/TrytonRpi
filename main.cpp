@@ -130,7 +130,8 @@ int main()
         cout<<"Pitch PID:"<<endl;
         Pitch_PID.Print();
 
-        //cout<<"String:"<<ARD.ArduString<<endl;
+        ARD.PrepareString(Pitch_PID.CV,Roll_PID.CV,Yaw_PID.CV,Throttle_Y,Throttle_Z);
+        cout<<"String:"<<ARD.ArduString<<endl;
         Data.clear();
 
         Data<<MPU.yaw<<MPU.pitch<<MPU.roll<<Yaw_PID.CV<<Roll_PID.CV<<Pitch_PID.CV;
