@@ -36,7 +36,7 @@ int main()
     int SerialID=0;
 
     SerialID=serialOpen("/dev/ttyAMA0", 115200);
-    cout<<SerialID<<endl;
+    cout<<"Serial ID:"<<SerialID<<endl;
 
     RpiMPU6050 MPU(MPU_6050_ADDRESS);
 
