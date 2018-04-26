@@ -107,13 +107,13 @@ int main()
         ReceiveSocket.receive(PIDPacket,IP,PIDreceivePort);
 
         PIDPacket>>kpt>>Kit>>Kdt;
-        Roll_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
-
-        PIDPacket>>kpt>>Kit>>Kdt;
-        Roll_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
+        Yaw_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
 
         PIDPacket>>kpt>>Kit>>Kdt;
         Pitch_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
+
+        PIDPacket>>kpt>>Kit>>Kdt;
+        Roll_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
 
         PIDPacket.clear();
 
