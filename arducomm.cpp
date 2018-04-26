@@ -31,7 +31,7 @@ void ArduComm::PrepareString(double Yaw_CV, double Pitch_CV, double Roll_CV, dou
 
     //up main
     ArduString+="A";
-    tmp=Throttle_Y+Pitch_CV*0.01;
+    tmp=Throttle_Y+Pitch_CV*0.01*500+MIN_PW;
     cout<<"tmp: "<<tmp<<endl;
     UP_MAIN=(int) tmp;
     cout<<"UP: "<<UP_MAIN<<endl;
