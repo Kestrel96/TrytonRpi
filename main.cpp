@@ -155,7 +155,8 @@ int main()
         ARD.PrepareString(Yaw_PID.CV,Pitch_PID.CV,Roll_PID.CV,Throttle_X,Throttle_Y,Throttle_Z);
         cout<<"String:"<<ARD.ArduString<<endl;
         serialFlush(SerialID);
-        sleep(0.5);
+        sleep(1);
+        serialFlush(SerialID);
         serialPrintf(SerialID,ARD.ArduString.c_str());
 
 
