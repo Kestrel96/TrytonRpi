@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <unistd.h>
 
 #define    MPU_6050_ADDRESS   0x68
 #define    MPU_6050_ADDRESS_2 0x69
