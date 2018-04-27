@@ -20,7 +20,7 @@ PID::PID()
 void PID::Compute (double sp, double pv){
 
 
-    cout<<"last e:"<<last_e<<" | "<<e_sum<<endl;
+   // cout<<"last e:"<<last_e<<" | "<<e_sum<<endl;
     SP=sp;
     e=SP-pv;
     P=kp*e;
