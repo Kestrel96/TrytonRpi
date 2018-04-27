@@ -137,7 +137,7 @@ int main()
 
         MPU.PrintAll();
 
-        Yaw_PID.Ki=1; Yaw_PID.Kd=1;
+      //  Yaw_PID.Ki=1; Yaw_PID.Kd=1;
         Yaw_PID.Compute(Yaw_SP,MPU.yaw);
       // Yaw_PID.I=0; Yaw_PID.D=0; Yaw_PID.CV=0;Yaw_PID.e_sum=0;
         Roll_PID.Compute(Roll_SP,MPU.roll);
