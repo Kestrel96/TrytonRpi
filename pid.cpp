@@ -11,6 +11,7 @@ PID::PID()
     kp=0;
     e=0;
     last_e=0;
+    e_sum=0;
     dt=0.06;//s
 
 }
@@ -18,6 +19,8 @@ PID::PID()
 
 void PID::Compute (double sp, double pv){
 
+
+    cout<<"last e:"<<last_e<<" | "<<e_sum<<endl;
     SP=sp;
     e=SP-pv;
     P=kp*e;
