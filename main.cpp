@@ -52,8 +52,8 @@ int main()
     UdpSocket ReceiveSocket;
     UdpSocket PIDsocket;
     SendSocket.setBlocking(false);
-    PIDsocket.setBlocking(1);
-    ReceiveSocket.setBlocking(1);
+    PIDsocket.setBlocking(false);
+    ReceiveSocket.setBlocking(false);
     IpAddress IP="10.42.0.1";
 
     unsigned short int port=4567;
@@ -123,6 +123,18 @@ int main()
         Pitch_PID.dt=elapsed_t;
         Roll_PID.dt=elapsed_t;
 
+        Data.clear();
+
+        Data<<MPU.yaw<<MPU.pitch<<MPU.roll<<Yaw_PID.CV<<Pitch_PID.CV<<Roll_PID.CV;
+
+        SendSocket.send(Data,IP,port);
+        Data.clear();
+
+        ReceiveSocket.receive(Data,IP,receivePort);
+
+        Data>>Yaw_SP>>Pitch_SP>>Roll_SP>>Throttle_X>>Throttle_Y>>Throttle_Z;
+        Data.clear();
+
 
 //        PIDPacket>>kpt>>Kit>>Kdt;
 //        Yaw_PID.Tuning(kpt,Kit,Kdt,elapsed_t);
@@ -159,22 +171,13 @@ int main()
         serialFlush(SerialID);
         serialPrintf(SerialID,ARD.ArduString.c_str());
 
+////////
 
 
-        Data.clear();
-
-        Data<<MPU.yaw<<MPU.pitch<<MPU.roll<<Yaw_PID.CV<<Pitch_PID.CV<<Roll_PID.CV;
-
-        SendSocket.send(Data,IP,port);
-        Data.clear();
-
-        ReceiveSocket.receive(Data,IP,receivePort);
-
-        Data>>Yaw_SP>>Pitch_SP>>Roll_SP>>Throttle_X>>Throttle_Y>>Throttle_Z;
 
         cout<<"RSP,PSP,YSP:"<<Roll_SP<<" | "<<Pitch_SP<<" | "<<Yaw_SP<<endl;
         cout<<"X,Y,Z: "<<Throttle_X<<Throttle_Y<<" | "<<Throttle_Z<<endl;
-        Data.clear();
+
 
 
         cout<<"t:"<<t.asMilliseconds()<<"ms"<<" | "<<"dt: "<<elapsed_t<<endl;
