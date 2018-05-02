@@ -6,7 +6,7 @@
 #define MIN_PW 1000
 #define MAX_CV 1000
 #define MIN_CV 0
-#define ZERO_POINT 1500
+#define ZERO_POINT 1480
 #define RANGE 500
 
 using namespace std;
