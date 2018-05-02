@@ -52,8 +52,8 @@ int main()
     UdpSocket ReceiveSocket;
     UdpSocket PIDsocket;
     SendSocket.setBlocking(false);
-    PIDsocket.setBlocking(false);
-    ReceiveSocket.setBlocking(false);
+    PIDsocket.setBlocking(1);
+    ReceiveSocket.setBlocking(1);
     IpAddress IP="10.42.0.1";
 
     unsigned short int port=4567;
