@@ -25,7 +25,7 @@ void PID::Compute (double sp, double pv){
     e=SP-pv;
     P=kp*e;
     I=Ki*e_sum;
-    D=Kd*(e-last_e)/dt*0.001;
+    D=Kd*(e-last_e)/dt;
 
     last_e=e;
 
