@@ -13,6 +13,7 @@ PID::PID()
     last_e=0;
     e_sum=0;
     dt=0.06;//s
+    CV=0;
 
 }
 
