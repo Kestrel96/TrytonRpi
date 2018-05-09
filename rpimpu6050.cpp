@@ -64,6 +64,9 @@ RpiMPU6050::RpiMPU6050(int idDev)
     wiringPiI2CWriteReg8(fd,28,ACC_FULL_SCALE_2_G);
     wiringPiI2CWriteReg8(fd,0x37,0x02);
     wiringPiI2CWriteReg8(fd,0x0A,0x16);
+    gzA=0;
+    gxA=0;
+    gyA=0;
 
 }
 

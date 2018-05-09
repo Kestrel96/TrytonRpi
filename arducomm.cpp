@@ -32,7 +32,7 @@ void ArduComm::PrepareString(double Yaw_CV, double Pitch_CV, double Roll_CV,doub
 
     //up main
     ArduString+="A";
-    tmp=Throttle_Y+Pitch_CV*0.01*RANGE+ZERO_POINT;
+    tmp=1.5*Throttle_Y+Pitch_CV*0.01*RANGE+ZERO_POINT;
     if(tmp>=MAX_PW){
         tmp=MAX_PW;
     }
@@ -46,7 +46,7 @@ void ArduComm::PrepareString(double Yaw_CV, double Pitch_CV, double Roll_CV,doub
     ArduString+=to_string(UP_MAIN);
     //left main
     ArduString+="A";
-    tmp=0.5*Throttle_Y-0.5*Pitch_CV*0.01*RANGE+Yaw_CV*0.01*RANGE+ZERO_POINT;
+    tmp=Throttle_Y-0.5*Pitch_CV*0.01*RANGE+Yaw_CV*0.01*RANGE+ZERO_POINT;
     if(tmp>=MAX_PW){
         tmp=MAX_PW;
     }
@@ -59,7 +59,7 @@ void ArduComm::PrepareString(double Yaw_CV, double Pitch_CV, double Roll_CV,doub
     ArduString+=to_string(L_MAIN);
     //right main
     ArduString+="A";
-    tmp=0.5*Throttle_Y-0.5*Pitch_CV*0.01*RANGE-Yaw_CV*0.01*RANGE+ZERO_POINT;
+    tmp=Throttle_Y-0.5*Pitch_CV*0.01*RANGE-Yaw_CV*0.01*RANGE+ZERO_POINT;
     if(tmp>=MAX_PW){
         tmp=MAX_PW;
     }
