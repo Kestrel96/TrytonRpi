@@ -18,7 +18,7 @@ PID::PID()
 }
 
 
-void PID::Compute (double sp, double pv){
+void PID::Compute (double sp, double pv, double PD_on_big_e){
 
 
    // cout<<"last e:"<<last_e<<" | "<<e_sum<<endl;
@@ -31,6 +31,12 @@ void PID::Compute (double sp, double pv){
     last_e=e;
 
     e_sum+=e*dt;
+
+
+    if(e>=PD_on_big_e || e<=-PD_on_big_e){
+        e_sum=0;
+        I=0;
+    }
 
 
     CV=P+I+D;

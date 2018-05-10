@@ -142,10 +142,10 @@ int main()
         MPU.PrintAll();
 
       //  Yaw_PID.Ki=1; Yaw_PID.Kd=1;
-        Yaw_PID.Compute(Yaw_SP,MPU.yaw);
+        Yaw_PID.Compute(Yaw_SP,MPU.yaw,2);
       // Yaw_PID.I=0; Yaw_PID.D=0; Yaw_PID.CV=0;Yaw_PID.e_sum=0;
-        Roll_PID.Compute(Roll_SP,MPU.roll);
-        Pitch_PID.Compute(Pitch_SP,MPU.pitch);
+        Roll_PID.Compute(Roll_SP,MPU.roll,2);
+        Pitch_PID.Compute(Pitch_SP,MPU.pitch,2);
 
         cout<<"Yaw PID"<<endl;
         Yaw_PID.Print();
